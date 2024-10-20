@@ -6,14 +6,18 @@
 #define csr_read(csr)                   \
   ({                                    \
     uint64_t __v;                       \
-    _Static_assert(0, "Unimplemented"); \
+    asm volatile("csrr %0, " #csr       \
+                 : "=r"(__v));          \
     __v;                                \
   })
 
-#define csr_write(csr, val)                                    \
-  ({                                                           \
-    uint64_t __v = (uint64_t)(val);                            \
-    asm volatile("csrw " #csr ", %0" : : "r"(__v) : "memory"); \
+#define csr_write(csr, val)             \
+  ({                                    \
+    uint64_t __v = (uint64_t)(val);     \
+    asm volatile("csrw " #csr ", %0"    \
+                  :                     \
+                  : "r"(__v)            \
+                  : "memory");          \
   })
 
 #endif

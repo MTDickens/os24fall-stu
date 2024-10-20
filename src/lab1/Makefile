@@ -35,3 +35,6 @@ clean:
 	$(shell test -f vmlinux.asm && rm vmlinux.asm)
 	$(shell test -f System.map && rm System.map)
 	@echo -e '\n'Clean Finished
+
+%.i: %.c
+	${GCC} ${CFLAG} -E $< -o $@
